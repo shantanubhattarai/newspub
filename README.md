@@ -1,5 +1,5 @@
-#READ THIS FIRST
-###Do not modify the files with "partial_" prefix.
+# READ THIS FIRST
+### Do not modify the files with "partial_" prefix.
 
 
 Put css/js/site image files in assets folder.

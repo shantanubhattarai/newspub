@@ -10,7 +10,7 @@
 			TITLE
 		</div>
 		<div class="card-body">
-			This is the body of the news.
+			This is the body.
 		</div>
 
 	</div>

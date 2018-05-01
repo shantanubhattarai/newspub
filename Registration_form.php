@@ -22,11 +22,9 @@
 			
 	</div>
 
+
 	<div class="right">
 		<h2>Advertisement Details</h2><?php date_default_timezone_set("Asia/Kathmandu"); ?>
-		
-
-		
 				<input type="text" name="ad_title" placeholder="Advertisement Title"><br><br>
 				<input type="text" name="ad_category" placeholder="Advertisement Category"><br><br>
 				<input type="text" name="ownership" placeholder="Advertisement Ownership"><br><br>
@@ -50,7 +48,7 @@
 
 				
 	</div>
-	<p>Further Page Alignment Details will be discussed after the confirmation of the advertisement posting.</p>
+	<p>Further Page Alignment and Colour Details will be discussed after the confirmation of the advertisement posting.</p>
 	<div class="submit"><input type="submit" name="submit" value="Confirm Your Submission"><input type="reset" name="Reset" ><div>
 			</form>
 

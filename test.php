@@ -1,1 +1,0 @@
-learning how the git cloning system works and all

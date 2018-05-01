@@ -50,15 +50,23 @@ $pro_editor=$_POST['pro_editor'];
 		echo "Colour Specifications:".$colour_specs;
 		echo "<br>";
 
-//Adding the Customer Details in the database
-	include"customer_database.php";
-	$customer_query="INSERT into customer(First_name,Last_name,Company_name,Address,Email,Website,Phone_number) VALUES('$first_name','$last_name','$company_name','$address','$email','$website','$phone_number')";
-	mysqli_query($con,$customer_query);
-		
-//Addint the advertisement details in the datbase
+
+$temp_var=substr($first_name,0,2).substr($ad_category,0,2).substr($ad_title,0,2);
+$ad_id=strtoupper($temp_var);
+
+
+
+		//Addint the advertisement details in the datbase
 	include "ad_database.php";
-	$ad_query="INSERT into advertisement(Ad_title,Ad_category,Ad_duration,Ad_ownership,Colour_specifications,Page_Specifications)VALUES ('$ad_title','$ad_category','$ad_duration','$ad_ownership','$colour_specs','$page_specs')";
-	mysqli_query($ad_con,$ad_query)
+	$ad_query="INSERT into advertisement(Ad_ID,Ad_title,Ad_category,Ad_duration,Ad_ownership,Colour_specifications,Page_Specifications)VALUES ('$ad_id','$ad_title','$ad_category','$ad_duration','$ad_ownership','$colour_specs','$page_specs')";
+	mysqli_query($ad_con,$ad_query);
+
+	//Adding the Customer Details in the database
+		include "customer_database.php";
+		$customer_query="INSERT into customer(First_name,Last_name,Company_name,Address,Email,Website,Phone_number,Ad_ID) VALUES('$first_name','$last_name','$company_name','$address','$email','$website','$phone_number','$ad_id')";
+		mysqli_query($con,$customer_query);
+			
+
 	
 
 

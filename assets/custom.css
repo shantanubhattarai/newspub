@@ -82,3 +82,7 @@ a:hover{
 .list-group .list-group-item:hover{
 	background-color: #F1F1F1;
 }
+
+.btn:hover{
+	cursor: pointer;
+}

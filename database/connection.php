@@ -1,3 +1,3 @@
 <?php 
-	$conn = mysqli_connect('localhost','root','','budgetxdb');
+	$conn = mysqli_connect('localhost','root','','newspub');
 ?>

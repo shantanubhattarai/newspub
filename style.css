@@ -1,0 +1,24 @@
+div.left{
+border: 2px solid green;
+padding:5px;
+float: left;
+width: 48%;
+height: 400px;
+}
+div.right{
+	border: 2px solid green;
+	padding:5px;
+	float: right;
+	width: 48%;
+	height: 400px;
+}
+div.right:hover{
+	border-color:blue; 
+}
+div.left:hover{
+	border-color:blue; 
+}
+div.submit{
+
+	text-align: right;
+}

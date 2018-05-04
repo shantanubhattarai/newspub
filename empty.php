@@ -10,7 +10,7 @@
 			TITLE
 		</div>
 		<div class="card-body">
-			This is the body.
+			This is body
 		</div>
 
 	</div>

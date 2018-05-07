@@ -1,5 +1,6 @@
 <?php
 	$title = "Staff List";
+	$search = "";
 ?>
 
 <?php include'partial_upper.php'; ?>
@@ -13,9 +14,13 @@
 			<table class="col-md-4 table table-striped">
 				<tr>
 					<a class="btn btn-success" href="add_staff.php">Add Staff</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="search" name="search">&nbsp;&nbsp;&nbsp;
-					<input class="btn btn-success" value="search">
+					<input type="text" name="search" id="search">&nbsp;&nbsp;&nbsp;
+					<input class="btn btn-success" value="search" onclick="setsearch()">
 				</tr>
+			</table>
+			<?php
+				
+			?>
 				<thead>
 					<tr>
 						<th>S. No.</th>
@@ -59,5 +64,11 @@
 
 	</div>
 </div>
+
+<script type="text/javascript">
+	function setsearch(){
+		var searchtext = document.getElementById('search').value;
+	}
+</script>
 
 <?php include 'partial_lower.php'; ?>

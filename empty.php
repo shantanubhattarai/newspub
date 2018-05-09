@@ -11,6 +11,10 @@
 		</div>
 		<div class="card-body">
 			This is the body.
+			<?php
+				echo $_SESSION['search_name'];
+			?>
+		</div>
 		</div>
 
 	</div>

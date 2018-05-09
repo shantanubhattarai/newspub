@@ -12,7 +12,14 @@
 		<div class="card-body">
 			This is the body.
 			<?php
-				echo $_SESSION['search_name'];
+				$str = "this is nice   ";
+				echo substr_count($str," ");
+				echo "\n";
+				$p = explode(" ",$str);
+				foreach ($p as $item){
+					echo $item;
+				}
+				echo $p[0];
 			?>
 		</div>
 		</div>

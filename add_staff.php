@@ -10,20 +10,33 @@
 			Add a Staff
 		</div>
 		<div class="card-body">
-			<form  action="database/add_staff.php" method = "post" class="col-md-4">
+			<form  action="database/add_staff.php" method = "post" class="col-md-5">
 				<h3>
 					Please enter the credentials here
 				</h3>
-				<div class="form-group">
-	  				<label class="control-label" for="name">First Name</label>
-		  			<input class="form-control" type="text" name="first_name">
-	  			</div><div class="form-group">
-	  				<label class="control-label">Middle Name</label>
-		  			<input class="form-control" type="text" name="middle_name">
-	  			</div><div class="form-group">
-	  				<label class="control-label">Last Name</label>
-		  			<input class="form-control" type="text" name="last_name">
-	  			</div>
+				<table>
+					<tr>
+						<td>
+							<div class="form-group">
+			  				<label class="control-label" for="name">First Name</label>
+				  			<input class="form-control" type="text" name="first_name">
+			  				</div>
+			  			</td>
+			  			<td>
+			  				<div class="form-group">
+			  				<label class="control-label">Middle Name</label>
+				  			<input class="form-control" type="text" name="middle_name">
+			  				</div>
+			  			</td>
+			  			<td>
+			  				<div class="form-group">
+			  				<label class="control-label">Last Name</label>
+				  			<input class="form-control" type="text" name="last_name">
+				  			</div>
+				  		</td>
+			  			</div>
+	  				</tr>
+	  			</table>
 			    <div class="form-group">
 	  				<label class="control-label">Date Of Birth</label>
 		  			<input class="form-control" type="date" name="dob">
@@ -40,10 +53,32 @@
 		  			<input class="text" onclick="no_of_contacts()" id="contact_number" name="contact_number" value="1" hidden>
 		  			
 	  			</div>
-				<div class="form-group">
-	  				<label class="control-label">Father Name</label>
-		  			<input class="form-control" type="text" name="father">
-	  			</div>
+				<table>
+					<h4>
+						Father Name
+					</h4>
+					<tr>
+						<td>
+							<div class="form-group">
+			  				<label class="control-label" for="name">First Name</label>
+				  			<input class="form-control" type="text" name="father_first_name">
+			  				</div>
+			  			</td>
+			  			<td>
+			  				<div class="form-group">
+			  				<label class="control-label">Middle Name</label>
+				  			<input class="form-control" type="text" name="father_middle_name">
+			  				</div>
+			  			</td>
+			  			<td>
+			  				<div class="form-group">
+			  				<label class="control-label">Last Name</label>
+				  			<input class="form-control" type="text" name="father_last_name">
+				  			</div>
+				  		</td>
+			  			</div>
+	  				</tr>
+	  			</table>
 	  			<div class="form group">
 	  				<label class="control-label">Staff category:</label>
 	  				<br>

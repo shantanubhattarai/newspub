@@ -28,12 +28,35 @@
 				</thead>
 				<tbody>
 					<?php
-						if(!isset($_COOKIE['search_name']) || !empty($_COOKIE['search_name'])){
-							$search_name = $_COOKIE['search_name'];
-							$query = mysqli_query($conn,"select * from staff_list where first_name ='$search_name'");
+						if(isset($_COOKIE['search_name']) && !empty($_COOKIE['search_name'])){
+							$search_name = trim(strtoupper($_COOKIE['search_name']));	//get the search value
+							$no_of_space = substr_count($search_name," "); // check for no of spaces
+
+							if($no_of_space==0){
+								// if first name only
+								$query = mysqli_query($conn,"select * from staff_list where first_name ='$search_name'");
+							}
+							else if($no_of_space == 1){
+								//if first and last name only
+								// explode removes the space and creates array of the remaining text
+								$names = explode(" ",$search_name);
+								//index 0 has first and index1 has last name
+								$search_first_name = $names[0];
+								$search_last_name = $names[1];
+								$query = mysqli_query($conn,"select * from staff_list where first_name ='$search_first_name' and last_name = '$search_last_name'");
+							}
+							else if($no_of_space == 2){
+								//if first and last name only
+								// explode removes the space and creates array of the remaining text
+								$names = explode(" ",$search_name);
+								//index 0 has first and index1 has last name
+								$search_first_name = $names[0];
+								$search_middle_name =  $names[1];
+								$search_last_name = $names[2];
+								$query = mysqli_query($conn,"select * from staff_list where first_name ='$search_first_name' and last_name = '$search_last_name' and middle_name = '$search_middle_name'");
+							}
 							$sno = 1;
 							if($query){
-
 								while($row = mysqli_fetch_assoc($query)){
 									$sqli2 = mysqli_query($conn,"select category from staff_category where id = ".$row['category']);
 									$cat = mysqli_fetch_assoc($sqli2);
@@ -61,7 +84,11 @@
 								$sno++;
 								}
 							}	
-							$SESSION['search_name'] = "";
+							else{
+								// fix the error
+								echo "No Result found on ". $search_name;
+							}
+							$_COOKIE['search_name'] = "";
 						}
 
 						else{

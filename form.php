@@ -12,14 +12,14 @@
         <div class="card-body">
             <form action="database/form_parse.php" method="Post">
                 <label>Type of the News</label> <br>
-                <input type="radio" name="news_type" value="sports"> Sports <br>
-                <input type="radio" name="news_type" value="finance"> Finance <br>
-                <input type="radio" name="news_type" value="politics"> Politics <br>
-                <input type="radio" name="news_type" value="ad"> Advertisement <br>
-                <input type="radio" name="news_type" value="announcement"> Announcement <br>
-                <input type="radio" name="news_type" value="interview"> Interview <br>
-                <input type="radio" name="news_type" value="editorial"> Editorial<br>
-                <input type="radio" name="news_type" value="horoscope"> Horoscope <br>
+                <input type="radio" name="type_id" value=1> Sports <br>
+                <input type="radio" name="type_id" value=2> Finance <br>
+                <input type="radio" name="type_id" value=3> Politics <br>
+                <input type="radio" name="type_id" value=6> Advertisement <br>
+                <input type="radio" name="type_id" value=8> Announcement <br>
+                <input type="radio" name="type_id" value=4> Interview <br>
+                <input type="radio" name="type_id" value=5> Editorial<br>
+                <input type="radio" name="type_id" value=7> Horoscope <br>
         
                 <label>News Topic </label><br>
                 <input type="text" name="news_topic"><br>

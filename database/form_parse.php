@@ -1,20 +1,23 @@
 <?php
 session_start();
-
+require_once("connection.php");
 	if (isset($_POST['news_submit']))//value comes from post_reply.php
 	{
-		include_once("connection.php");
-		$news_type = $_POST['news_type'];
-  		$news_topic = $_POST['news_topic'];
-  		$news_content = $_POST['news_content'];
-  		$source = $_POST['source'];
+		
+		$type_id = mysqli_real_escape_string($conn,$_POST['type_id']);
+  		$news_topic = mysqli_real_escape_string($conn,$_POST['news_topic']);
+  		$news_content = mysqli_real_escape_string($conn,$_POST['news_content']);
+  		$source = mysqli_real_escape_string($conn,$_POST['source']);
 
 		//insert reply in the table
-		$sql = "INSERT INTO news (news_type, news_topic, news, source, post_date) VALUES ('".$news_type."', '".$news_topic."', '".$news_content."', '".$source."',now())";
-		$res = mysqli_query($dbconn,$sql) ;
-	}
-	if($res)
+		$sql = "INSERT INTO news (type_id, news_topic, news,  source, post_date) VALUES ('$type_id', '$news_topic', '$news_content', '$source',now())";
+		
+		if(mysqli_query($conn, $sql))
 		{
-			header("Location: /newspub/success.php");
+			header('location: /newspub/success.php');
 		}
+		else
+			echo "error";
+	}
+	
 ?>

@@ -93,6 +93,11 @@
 	  				?>
 	  			</div>
 	  			<div class="form-group">
+		  			<img id="ProfImage" src="media/default.png" alt="your image" width="100" height="100" class="rounded-circle" />
+				  	<label class="control-label" for="image"> Select your image</label>
+					<input type="file" name="image" onchange="document.getElementById('ProfImage').src = window.URL.createObjectURL(this.files[0])">
+		  		</div>
+	  			<div class="form-group">
 	  				<input type="submit" class="btn btn-success" value="Add">
 	  			</div>
 			</form>

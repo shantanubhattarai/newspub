@@ -10,16 +10,25 @@
 			TITLE
 		</div>
 		<div class="card-body">
-			This is the body.
 			<?php
-				$str = "this is nice   ";
-				echo substr_count($str," ");
-				echo "\n";
-				$p = explode(" ",$str);
-				foreach ($p as $item){
-					echo $item;
+				$no=substr_count("RAM BAHADUR KARKI", "AM");
+				if($no > 0){
+					echo "YES AM IS FOUND";
 				}
-				echo $p[0];
+				else{
+					echo "this doesnt work";
+				}
+				$sql = mysqli_query($conn,"select * from staff_list");
+				while($row= mysqli_fetch_assoc($sql)){
+					$name1 = $row['first_name'].' '.$row['middle_name'].' '.$row['last_name'];
+					$no = substr_count($name1,"AM");
+					if($no >0){
+						echo $name1;
+					}
+					else{
+						echo "NO";
+					}
+				}
 			?>
 		</div>
 		</div>

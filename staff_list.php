@@ -1,6 +1,19 @@
 <?php
 	$title = "Staff List";
 	include'partial_upper.php'; 
+	ob_start();
+	$sno =1;
+	$last_staff_id=1;
+	if(isset($_COOKIE['search_name']) && !empty($_COOKIE['search_name'])){
+		$searchbox = trim(strtoupper($_COOKIE['search_name']));
+	}
+	else{
+		$searchbox = "";
+	}
+	$query = mysqli_query($conn,"select * from staff_list");
+	$row_no = mysqli_num_rows($query);
+	$no_of_pages = ceil($row_no/2); // change the 2 to determine the no of pages you want to create
+
 ?>
 
 <div class="container">
@@ -13,98 +26,112 @@
 
 			<div class="row"> 
 				<a class="btn btn-success" href="add_staff.php">Add</a> &nbsp;&nbsp;&nbsp;&nbsp;
-				<input type ="text" placeholder="Search name..." name="searchbox" id="search" value="">
-				<script type="text/javascript">
-					// if cookie set change value of the search box to values
-					var temp = getcookie("search_name");
-					if(temp!=""){
-						document.getElementById("search").value = temp;
-					}					
-				</script>
-		  		<input type="button" class="btn btn-success" onclick="set_search()" value="Search"/>
+				<input type ="text" placeholder="Search name..." name="searchbox" id="search" value=<?=$searchbox?>>
+		  		<input type="button" class="btn btn-success" onclick = "setSearch()" value="Search"/>
 			</div>
-
-
-			<table class="table table-striped">
-				<thead>	
-					<tr>
-						<th> S.No. </th>
-						<th> Full Name</th> 
-						<th> Staff Category</th> 
-					</tr>
-				</thead>
-				<tbody>
+				<div class="pages">
 					<?php
-						ob_start(); 	// to exclude the header error
-						if(isset($_COOKIE['search_name']) && !empty($_COOKIE['search_name'])){
-							$search_name = trim(strtoupper($_COOKIE['search_name']));
-							$names_to_search_id = [];
-							$sql = mysqli_query($conn,"select * from staff_list");
-							$sno =1;
-
-							while($row= mysqli_fetch_assoc($sql)){
-								$full_name =  $row['first_name'] ." ". $row['middle_name']." ". $row['last_name'];
-								$no = substr_count($full_name,$search_name);
-								if($no >0){
-									$sql2 = mysqli_query($conn,"select category from staff_category where id = ".$row['category']);
-									$cat = mysqli_fetch_assoc($sql2);
-						?>
-								<tr>
-									<td> <?=$sno?> </td>
-									<td>
-										<?=$full_name?>
-
-									</td>
-									<td> <?=$cat['category'];?> </td>
-									<td>
-										<form action="edit_staff_info.php" method="post">
-											<input type="text" value="<?=$id?>" name="staff_id" hidden>
-											<button class="btn btn-info" type="submit">
-												Edit
-											</button>
-										</form>
-									</td>
-								</tr>
+						for($i=1;$i<=$no_of_pages;$i++){
+					?>
+						<a href="#" class="page_list" onclick="openPage(event, <?=$i?>)"> <?=$i?></a>	
+						<?php } ?>
+				</div>
+					<?php
+						for($i=1;$i<=$no_of_pages;$i++){
+							$limit = $sno +1;
+							
+					?>
+						<table class="table table-striped pagecontent" id=<?=$i?>>
+						<thead>	
+							<tr>
+								<th> S.No. </th>
+								<th> Full Name</th> 
+								<th> Staff Category</th> 
+								<th></th>
+							</tr>
+						</thead>
+						<tbody >
 							<?php
-								$sno++;
-								}
+								if($query)
+								while($sno <= $limit && $row = mysqli_fetch_assoc($query)){
+									$id =$row['id'];
+									if($id >=$last_staff_id ){
+										if(strlen($searchbox) == 0){
+							?>			
+										<tr>
+										<?php
+											$sqli2 = mysqli_query($conn,"select category from staff_category where id = ".$row['category']);
+											$cat = mysqli_fetch_assoc($sqli2);
+										?>
+												<td> <?=$sno?> </td>
+												<td>
+													<?= $row['first_name'] ." ". $row['middle_name']." ". $row['last_name']?>
+
+												</td>
+												<td> <?= $cat['category']?> </td>
+												<td>
+													<form action="edit_staff_info.php" method="post">
+														<input type="hidden" value="<?=$id?>" name="staff_id">
+														<button class="btn btn-info" type="submit">
+															Edit
+														</button>
+													</form>
+												</td>
+															
+											<?php
+												$sno++;
+												$last_staff_id = $id;									
+											?>
+											</tr>
+											<?php
+											}
+
+											else{
+												$full_name =  $row['first_name'] ." ". $row['middle_name']." ". $row['last_name'];
+												$no = substr_count($full_name,$searchbox);
+												if($no > 0){
+											?>
+
+												<tr>
+												<?php
+													$sqli2 = mysqli_query($conn,"select category from staff_category where id = ".$row['category']);
+													$cat = mysqli_fetch_assoc($sqli2);
+												?>
+														<td> <?=$sno?> </td>
+														<td>
+															<?= $row['first_name'] ." ". $row['middle_name']." ". $row['last_name']?>
+
+														</td>
+														<td> <?= $cat['category']?> </td>
+														<td>
+															<form action="edit_staff_info.php" method="post">
+																<input type="hidden" value="<?=$id?>" name="staff_id">
+																<button class="btn btn-info" type="submit">
+																	Edit
+																</button>
+															</form>
+														</td>
+																	
+													<?php
+														$sno++;
+														$last_staff_id = $id;									
+													?>
+													</tr>
+											<?php
+												}
+											}	
+										}								
+									}
+										?>
+									
+						</tbody>
+
+						<?php
 							}
 							setcookie("search_name",null);
-						}
-						else{
-							$query = mysqli_query($conn,"select * from staff_list");
-							$sno = 1;
-							if($query){
-								while($row = mysqli_fetch_assoc($query)){
-
-									$sqli2 = mysqli_query($conn,"select category from staff_category where id = ".$row['category']);
-									$cat = mysqli_fetch_assoc($sqli2);
-									$id =$row['id'];
-							?>
-										<tr>
-											<td> <?=$sno?> </td>
-											<td>
-												<?= $row['first_name'] ." ". $row['middle_name']." ". $row['last_name']?>
-
-											</td>
-											<td> <?= $cat['category']?> </td>
-											<td>
-												<form action="edit_staff_info.php" method="post">
-													<input type="hidden" value="<?=$id?>" name="staff_id">
-													<button class="btn btn-info" type="submit">
-														Edit
-													</button>
-												</form>
-											</td>
-										</tr>
-										
-						<?php
-								$sno++;
-								}
-							}
-						}
 						?>
-				</tbody>
+
+				
 			</table>
 		</div>
 
@@ -113,12 +140,35 @@
 </div>
 
 <script type="text/javascript">
+	// to set search name
 	var temp= "";
-	function set_search(){
+	function setSearch(){
 		temp = document.getElementById("search").value;
 		document.cookie = "search_name="+temp;
 		location.reload(true);
 	}
+
+	// for page scrollling
+	var pagecontent = document.getElementsByClassName("pagecontent");
+    for (i = 1; i < pagecontent.length; i++) {
+        pagecontent[i].style.display = "none";
+    }
+    pagecontent[0].style.display = "table";
+    function openPage(evt, page_no){
+    	var page_list,pagecontent,i;
+    	pagecontent = document.getElementsByClassName("pagecontent");
+	    for (i = 0; i < pagecontent.length; i++) {
+	        pagecontent[i].style.display = "none";
+	    }
+	    page_list = document.getElementsByClassName("page_list");
+	    for (i = 0; i < page_list.length; i++) {
+        	page_list[i].className = page_list[i].className.replace(" active", "");
+    	}
+    	document.getElementById(page_no).style.display = "table";
+    	evt.currentTarget.className += " active";
+    }
+
 </script>
 
 <?php include 'partial_lower.php'; ?>
+							

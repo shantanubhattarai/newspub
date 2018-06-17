@@ -10,11 +10,11 @@
 		<div class="card-header">
 			Edit Staff Information
 		</div>
-		<form  action="database/add_staff.php" method = "post" class="col-md-5">
+		<form  action="database/edit_staff_info.php" method = "post" class="col-md-5">
 
-			<div class="card-body col-md-5">
+			<div>
 			<?php
-				$sql = mysqli_query($conn,"select * from staff_list where id= '$id'");
+				$sql = mysqli_query($conn,"select * from staff_list where id=".$id);
 				$row = mysqli_fetch_assoc($sql);
 			?>
 			<table>
@@ -63,7 +63,7 @@
   				?>
 	  			<span id="cont"></span>
 	  			<input class="btn btn-info" onclick="addcontact()" value="Add another">
-	  			<input class="text" onclick="no_of_contacts()" id="contact_number" name="contact_number" value="0" hidden>
+	  			<input class="text" onclick="no_of_contacts()" id="no_contacts" name="no_contacts" value="0" hidden>
 	  			
   			</div>
 			<table>
@@ -92,13 +92,28 @@
 		  			</div>
   				</tr>
   			</table>
+
+			<div class="form group">
+  				<label class="control-label">Staff category:</label>
+  				<br>
+  				<?php
+  					$sql = mysqli_query($conn,"select * from staff_category");
+  					while($row2 = mysqli_fetch_assoc($sql)){
+  				?>
+  						<input type="radio" name="category" value="<?=$row['id']?>">
+  						<?=$row2['category']?> <br>
+  				<?php
+  					
+  					}
+  				?>
+  			</div>
   			<div>
 				<label class="control-label">Photo</label>
 				<img id="blah" src="<?=$row['photo']?>" alt="image" width="100" height="100" class="rounded-circle" />
 		  		<label class="control-label" for="image"> Select your image</label>
 				<input type="file" name="image" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
 			</div>
-			<input type="submit" class="btn btn-success" value ="Update">
+			<input type="submit" class="btn btn-success" value ="Update" name="submit">
 		</form>
 	</div>
 </div>

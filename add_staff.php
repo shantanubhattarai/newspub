@@ -10,7 +10,7 @@
 			Add a Staff
 		</div>
 		<div class="card-body">
-			<form  action="database/add_staff.php" method = "post" class="col-md-5">
+			<form  action="database/add_staff.php" method = "post" class="col-md-5" enctype="multipart/form-data">
 				<h3>
 					Please enter the credentials here
 				</h3>
@@ -50,7 +50,7 @@
 		  			<input class="form-control" type="tel" name="contact1">
 		  			<span id="cont"></span>
 		  			<input class="btn btn-info" onclick="addcontact()" value="Add another">
-		  			<input class="text" onclick="no_of_contacts()" id="contact_number" name="contact_number" value="1" hidden>
+		  			<input class="text" onclick="no_of_contacts()" id="no_contacts" name="no_contacts" value="1" hidden>
 		  			
 	  			</div>
 				<table>
@@ -98,7 +98,7 @@
 					<input type="file" name="image" onchange="document.getElementById('ProfImage').src = window.URL.createObjectURL(this.files[0])">
 		  		</div>
 	  			<div class="form-group">
-	  				<input type="submit" class="btn btn-success" value="Add">
+	  				<input type="submit" class="btn btn-success" value="Add" name="submit">
 	  			</div>
 			</form>
 		</div>
@@ -115,7 +115,7 @@
 		no_of_contacts();
 	}
 	function no_of_contacts(){
-		document.getElementById('contact_number').value = number;
+		document.getElementById('no_contacts').value = number;
 	}
 </script>
 <?php include 'partial_lower.php'; ?>

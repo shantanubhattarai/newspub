@@ -14,7 +14,6 @@
 	}
 
 	if(isset($_POST['submit'])){
-		 //change the values to upper case
 		$first_name= strtoupper(mysqli_real_escape_string($conn,$_POST['first_name']));
 		$middle_name = strtoupper(mysqli_real_escape_string($conn,$_POST['middle_name']));
 		$last_name = strtoupper(mysqli_real_escape_string($conn,$_POST['last_name']));
@@ -38,7 +37,7 @@
 		values('$first_name','$middle_name','$last_name','$dob','$citizenship_no','$image_path','$category','$date_enrolled','$father_first_name','father_middle_name','father_last_name')";
 		
 		if(mysqli_query($conn,$query)){
-			header('location:../staff_list.php');
+			
 		}
 		else{
 			echo "ERROR IN INSETING TO DATBASE";
@@ -57,6 +56,7 @@
 			$i++;
 		}
 
+		header('location:../staff_list.php');
 	}
 
 ?>

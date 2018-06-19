@@ -14,11 +14,6 @@
 	}
 
 	if(isset($_POST['submit'])){
-		 //change the values to upper case
-		$first_name= mysqli_real_escape_string($conn,$_POST['first_name']);
-		$middle_name = mysqli_real_escape_string($conn,$_POST['middle_name']);
-		$last_name = mysqli_real_escape_string($conn,$_POST['last_name']);
-
 		$first_name= strtoupper(mysqli_real_escape_string($conn,$_POST['first_name']));
 		$middle_name = strtoupper(mysqli_real_escape_string($conn,$_POST['middle_name']));
 		$last_name = strtoupper(mysqli_real_escape_string($conn,$_POST['last_name']));
@@ -26,8 +21,6 @@
 		$dob = mysqli_real_escape_string($conn,$_POST['dob']);
 		$citizenship_no = mysqli_real_escape_string($conn,$_POST['citizenship_no']);
 		$category = mysqli_real_escape_string($conn,$_POST['category']);
-		$date_enrolled = mysqli_real_escape_string($conn,$_POST['date_enrolled']);
-		$father_name = mysqli_real_escape_string($conn,$_POST['father_name']);
 		$father_first_name = strtoupper(mysqli_real_escape_string($conn,$_POST['father_first_name']));
 		$father_middle_name = strtoupper(mysqli_real_escape_string($conn,$_POST['father_middle_name']));
 		$father_last_name = strtoupper(mysqli_real_escape_string($conn,$_POST['father_last_name']));
@@ -39,16 +32,11 @@
 		}else{
 			$image_path = $default_file;
 		}
-		$query = "insert into staff_list(first_name,middle_name,last_name,dob,citizenship_no,photo,category,date_enrolled,father_name)
-		values('$first_name','$middle_name','$last_name','$dob','$citizenship_no','$image_path','$category','$date_enrolled','$father_name')";
+		$query = "insert into staff_list(first_name,middle_name,last_name,dob,citizenship_no,photo,category,father_first_name,father_middle_name,father_last_name)
+		values('$first_name','$middle_name','$last_name','$dob','$citizenship_no','$image_path','$category','$father_first_name','father_middle_name','father_last_name')";
 		
 		if(mysqli_query($conn,$query)){
-			header('location:../staff_list.php');
-		$query = "insert into staff_list(first_name,middle_name,last_name,dob,citizenship_no,photo,category,date_enrolled,father_first_name,father_middle_name,father_last_name)
-		values('$first_name','$middle_name','$last_name','$dob','$citizenship_no','$image_path','$category','$date_enrolled','$father_first_name','father_middle_name','father_last_name')";
-		
-		if(mysqli_query($conn,$query)){
-			
+			echo "Success";
 		}
 		else{
 			echo "ERROR IN INSETING TO DATBASE";
@@ -66,8 +54,7 @@
 			mysqli_query($conn,$query);
 			$i++;
 		}
-
-		header('location:../staff_list.php');
+		//header('location:../staff_list.php');
 	}
 
 ?>

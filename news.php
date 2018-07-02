@@ -8,6 +8,16 @@
 	<div class="card">
 		<div class="card-header">
 			<?php
+			//Variables for pagination
+				$page_name="news.php";
+				if (isset($_GET['start'])){$start=$_GET['start'];}
+				else {$start = 0;}
+				$eu = ($start - 0);
+				$limit = 2; // No of records to be shown per page.
+				$this1 = $eu + $limit;
+				$back = $eu - $limit;
+				$next = $eu + $limit;
+			//End Pagination Variables. 
 				$sql = "SELECT * from news_type";
 				$result = mysqli_query($conn,$sql);
 				while($row = mysqli_fetch_assoc($result)){
@@ -26,21 +36,62 @@
 		<div class="card-body">
 		<?php
 			$id = mysqli_connect('localhost', 'root', '','newspub');
-
-			$sql2 = mysqli_query( $id , " SELECT * FROM news ORDER BY post_date DESC");
-
+			$sql1 = mysqli_query( $id , " SELECT * FROM news");
+			$nume = mysqli_num_rows($sql1); //Total Number of items for Pagination
+			$sql2 = mysqli_query( $id , " SELECT * FROM news ORDER BY post_date DESC LIMIT $eu, $limit");
 			if(mysqli_num_rows($sql2) > 0)
 			{
 				while($results = mysqli_fetch_array($sql2))
 				{
 				$type = mysqli_fetch_assoc(mysqli_query($id,"SELECT type FROM news_type WHERE id =".$results['type_id']));
-				echo "<h1> ".$results['news_topic']." </h1>";
+		?>
+				<h1> <a href="view_news.php?news_id=<?=$results['news_id'] ?>"><?=$results['news_topic']?></a></h1>
+		<?php
 				//echo "<b> ".$results['staff_id']." </b><br>";
 				echo "<b> ".$results['post_date']." </b><br>";
 				echo "<i> ".$type['type']." </i><br>";
-				echo " ".$results['news']." <br>";
+				$string = strip_tags($results['news']);
+				if (strlen($string) > 500) {
+				
+				    // truncate string
+				    $stringCut = substr($string, 0, 500);
+				    $endPoint = strrpos($stringCut, ' ');
+				
+				    //if the string doesn't contain any space then it will cut without word basis.
+				    $string = $endPoint? substr($stringCut, 0, $endPoint):substr($stringCut, 0);
+				    $string .= '... <a href="view_news.php?news_id='.$results['news_id'].'">Read More</a>';
+				}
+				echo $string;
+				echo "<br>";
 				echo " <i> ".$results['source']."<br></i>";
 				}
+			}
+			if ( $limit < $nume) 
+			{
+				echo "<table align = 'center' width='50%'><tr><td align='left' width='30%'>";
+				if($back >=0) 
+				{
+					print "<a href='$page_name?start=$back'><font face='Verdana' size='2'>PREV</font></a>";
+				}
+				echo "</td><td align=center width='30%'>";
+				$i=0;
+				$l=1;
+				for($i=0;$i < $nume;$i=$i+$limit){
+				if($i <> $eu)
+				{
+					echo " <a href='$page_name?start=$i'><font size='2'>$l</font></a> ";
+				}
+				else 
+				{ 
+					echo "<font size='4' color=red>$l</font>";} //Current page is not displayed as link and given font color red
+					$l=$l+1;
+				}
+				echo "</td><td align='right' width='30%'>";
+				if($this1 < $nume) 
+				{
+					print "<a href='$page_name?start=$next'><font face='Verdana' size='2'>NEXT</font></a>";
+				}
+				echo "</td></tr></table>";
 			}
 		?>
 		</div>

@@ -6,10 +6,6 @@
 
 <div class="container">
 	<div class="card">
-		<div class="card-header">
-			TITLE
-		</div>
-		<div class="card-body">
 			<?php
 				$news_id = $_GET['news_id'];
 				$query = " SELECT * FROM news WHERE news_id=$news_id";
@@ -24,13 +20,14 @@
 				<h3><?= $row['news_topic']; ?> </h3>
 			</div>
 			<div class="card-body">
-				Category: <i><?= $type['type']; ?></i></br>
-				<?= $row['news']; ?></br>
-				<?= $row['post_date']; ?></br>
-				<?= $row['source']; ?></br>
+				<ul class="list-group list-group-flush news-list">
+						<p class="list-group-item"> Category: <i><?= $type['type']; ?></i> </p>
+						<p class="list-group-item">	 <?= $row['news']; ?> </p>
+						<p class="list-group-item"> <?= $row['post_date']; ?> </p>
+						<p class="list-group-item"> <?= $row['source']; ?> </p>
+				</ul>
 			</div>
 		</div>
-	</div>
 </div>
 
 <?php include 'partial_lower.php'; ?>

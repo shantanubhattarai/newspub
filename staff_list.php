@@ -19,7 +19,6 @@
 	$query = mysqli_query($conn,"select * from staff_list");
 	$row_no = mysqli_num_rows($query);
 	$no_of_pages = ceil($row_no/2); // change the 2 to determine the no of pages you want to create
-
 ?>
 
 

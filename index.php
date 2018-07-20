@@ -3,7 +3,9 @@
 ?>
 
 <?php include'partial_upper.php'; ?>
-
+<?php 
+	header("location: main_news.php");
+?>
 <div class="container">
 	<div class="card">
 		<div class="card-header">

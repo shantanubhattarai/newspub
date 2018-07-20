@@ -23,7 +23,7 @@
 			$result = mysqli_query($conn,$sql);
 			while($row = mysqli_fetch_assoc($result)){
 		?>
-			<a href = "?type=click&&cat=<?=$row['id']?>"><span class="text-muted ml-3"><?=$row['type']?></span></a>
+			<a href = "?type=click&&cat=<?=$row['type_id']?>"><span class="text-muted ml-3"><?=$row['type']?></span></a>
 		<?php } ?>
 	</div>
 
@@ -40,7 +40,7 @@
 						$result = mysqli_query($conn,$sql);
 						while($row = mysqli_fetch_assoc($result)){
 					?>
-					<option value = "<?=$row['id']?>"><?=$row['type']?></option>
+					<option value = "<?=$row['type_id']?>"><?=$row['type']?></option>
 					<?php 
 					}
 					?>
@@ -64,16 +64,16 @@
 					$condition = "WHERE news_topic LIKE '%$search_text%'";
 					if(isset($_GET['search_type']) && $_GET['search_type'] != "All"){
 						$search_type = $_GET['search_type'];
-						$condition .= "AND type_id = '$search_type' ";
+						$condition = "WHERE news.news_topic LIKE '%$search_text%' AND news_type_rel.type_id = '$search_type' ";
 					}
 				}
 				$id = mysqli_connect('localhost', 'root', '','newspub');
-				if($sql1 = mysqli_query( $id , " SELECT * FROM news $condition ")){
+				if($sql1 = mysqli_query( $id , " SELECT * FROM  news INNER JOIN news_type_rel ON news.news_id = news_type_rel.news_id $condition ")){
 					$nume = mysqli_num_rows($sql1); //Total Number of items for Pagination
-					$sql2 = mysqli_query( $id , " SELECT * FROM news $condition ORDER BY post_date DESC LIMIT $eu, $limit");
+					$sql2 = mysqli_query( $id , " SELECT * FROM news INNER JOIN news_type_rel ON news.news_id = news_type_rel.news_id $condition ORDER BY post_date DESC LIMIT $eu, $limit");
 				if(mysqli_num_rows($sql2) > 0){
-					while($results = mysqli_fetch_array($sql2)){
-						$type = mysqli_fetch_assoc(mysqli_query($id,"SELECT type FROM news_type WHERE id =".$results['type_id']));
+					while($results = mysqli_fetch_assoc($sql2)){
+						$type = mysqli_fetch_assoc(mysqli_query($id,"SELECT type FROM news_type WHERE type_id =" . $results['type_id']));
 			?>
 						<h1> <a href="view_news.php?news_id=<?=$results['news_id'] ?>"><?=$results['news_topic']?></a></h1>
 			<?php
@@ -86,7 +86,7 @@
 						    $endPoint = strrpos($stringCut, ' ');
 						    //if the string doesn't contain any space then it will cut without word basis.
 						    $string = $endPoint? substr($stringCut, 0, $endPoint):substr($stringCut, 0);
-						    $string .= '... <a href="view_news.php?news_id='.$results['news_id'].'">Read More</a>';
+						    $string .= '... <br><a href="view_news.php?news_id='.$results['news_id'].'">Read More</a>';
 						}
 					echo $string;
 					echo "<br>";

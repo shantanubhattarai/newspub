@@ -3,13 +3,13 @@
 			$cat = $_GET['cat'];
 			$id = mysqli_connect('localhost', 'root', '','newspub');
 
-			$sql2 = mysqli_query( $id , " SELECT * FROM news WHERE type_id = $cat ORDER BY post_date DESC");
-
+			$sql2 = mysqli_query( $id , " SELECT * FROM news INNER JOIN news_type_rel ON news.news_id = news_type_rel.news_id WHERE news_type_rel.type_id = $cat ORDER BY post_date DESC");
+			$nume = mysqli_num_rows($sql2);
 			if(mysqli_num_rows($sql2) > 0)
 			{
 				while($results = mysqli_fetch_array($sql2))
 				{
-				$type = mysqli_fetch_assoc(mysqli_query($id,"SELECT type FROM news_type WHERE id =".$results['type_id']));
+				$type = mysqli_fetch_assoc(mysqli_query($id,"SELECT type FROM news_type WHERE type_id =".$results['type_id']));
 		?>
 				<h1> <a href="view_news.php?news_id=<?=$results['news_id'] ?>"><?=$results['news_topic']?></a></h1>
 		<?php
@@ -25,7 +25,7 @@
 				
 				    //if the string doesn't contain any space then it will cut without word basis.
 				    $string = $endPoint? substr($stringCut, 0, $endPoint):substr($stringCut, 0);
-				    $string .= '... <a href="view_news.php?news_id='.$results['news_id'].'">Read More</a>';
+				    $string .= '...<br> <a href="view_news.php?news_id='.$results['news_id'].'">Read More</a>';
 					}
 				echo $string;
 				echo "<br>";

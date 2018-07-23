@@ -22,7 +22,8 @@
 			<div class="card-body">
 				<ul class="list-group list-group-flush news-list">
 						<p class="list-group-item"> Category: <i><?= $type['type']; ?></i> </p>
-						<p class="list-group-item">	 <?= $row['news']; ?> </p>
+						<p class="list-group-item"> <?= $row['news']; ?> </p>
+						<p class="list-group-item"> <?= $results['author']; ?></p>
 						<p class="list-group-item"> <?= $row['post_date']; ?> </p>
 						<p class="list-group-item"> <?= $row['source']; ?> </p>
 				</ul>

@@ -77,6 +77,7 @@
 			?>
 						<h1> <a href="view_news.php?news_id=<?=$results['news_id'] ?>"><?=$results['news_topic']?></a></h1>
 			<?php
+						echo $results['author']."<br>";
 						echo "<b> ".$results['post_date']." </b><br>";
 						echo "<i> ".$type['type']." </i><br>";
 						$string = strip_tags($results['news']);
